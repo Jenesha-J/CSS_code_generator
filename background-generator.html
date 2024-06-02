@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .controls label {
+            margin-right: 10px;
+        }
+
+        .background-preview {
+            height: 200px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .output {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        pre {
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Background Generator</h1>
+        <div class="controls">
+            <label for="color1">Color 1:</label>
+            <input type="color" id="color1" name="color1" value="#ff0000">
+            
+            <label for="color2">Color 2:</label>
+            <input type="color" id="color2" name="color2" value="#0000ff">
+            
+            <label for="direction">Direction:</label>
+            <select id="direction" name="direction">
+                <option value="to right">to right</option>
+                <option value="to left">to left</option>
+                <option value="to bottom">to bottom</option>
+                <option value="to top">to top</option>
+                <option value="45deg">45 degrees</option>
+                <option value="135deg">135 degrees</option>
+                <option value="225deg">225 degrees</option>
+                <option value="315deg">315 degrees</option>
+            </select>
+            
+            <button id="generate">Generate Background</button>
+        </div>
+        <div class="output">
+            <h2>Preview</h2>
+            <div class="background-preview" id="background-preview"></div>
+            <h3>CSS Code</h3>
+            <pre id="css-code"></pre>
+            <button class="copy-button" id="copy-button">Copy to Clipboard</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('generate').addEventListener('click', function() {
+            const color1 = document.getElementById('color1').value;
+            const color2 = document.getElementById('color2').value;
+            const direction = document.getElementById('direction').value;
+            
+            const gradient = `linear-gradient(${direction}, ${color1}, ${color2})`;
+            const preview = document.getElementById('background-preview');
+            preview.style.background = gradient;
+            
+            const cssCode = `background: ${gradient};`;
+            document.getElementById('css-code').textContent = cssCode;
+        });
+
+        document.getElementById('copy-button').addEventListener('click', function() {
+            const cssCode = document.getElementById('css-code').textContent;
+            navigator.clipboard.writeText(cssCode).then(() => {
+                alert('CSS code copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
+    </script>
+</body>
+</html>
